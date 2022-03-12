@@ -17,7 +17,7 @@ server = http.createServer((req, res) => {
 });
 const io = new Server(server, {
   cors: {
-    origin: "muzaffarfakirnisar.github.io/Chat.io.gitub/",
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["*"],
     credentials: true
