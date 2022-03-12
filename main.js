@@ -2,7 +2,7 @@ let http = require('http');
 let fs = require('fs');
 let cors = require('cors');
 const { Server } = require("socket.io");
-
+io.set('origins', '*:*')
 let port = process.env.PORT || 8080;
 server = http.createServer((req, res) => {
   fs.readFile('index.html', 'utf-8', (er, html) => {
