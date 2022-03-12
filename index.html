@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Muju</title>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #h2 {
+
+      background-color: #DDDFF1;
+      border: 1vmin solid black;
+      border-radius: 1vmin;
+      text-align: center;
+    }
+
+    .container {
+      margin: 0 auto;
+      border: 1vmin solid #404258;
+      border-radius: 1vmin;
+      height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      background-color: #FFFFFF;
+    }
+
+    .message {
+      background-color: #000000;
+      color: white;
+      border: 1px;
+      border-radius: 1px;
+      margin: 10px
+    }
+
+    .left {
+      float: left;
+      color: white;
+      clear: both;
+    }
+
+    .right {
+      float: right;
+      color: white;
+      clear: both;
+    }
+
+    #input {
+      width: 280px;
+      text-align: center;
+      border: 1px solid black;
+      border-radius: 8px;
+      height: 28px;
+      background-color: #F8F8FF;
+      margin-bottom: 3px;
+    }
+
+    #btn {
+      width: 51px;
+      height: 40px;
+      border: 1px solid black;
+      border-radius: 1px;
+      margin: 1px;
+
+
+    }
+  </style>
+
+  <!-- HTML -->
+
+
+  <!-- Custom Styles -->
+</head>
+
+<body>
+  <h2 id="h2">Online : <span id="online">0</span></h2>
+  <div class="container">
+    <div class="message left">Hello</div>
+    <div class="message right">Hi</div>
+  </div>
+  <div class="send">
+    <form action="#" id="form">
+      <input type="text" name="" id="input">
+      <button id="btn">Send</button>
+    </form>
+  </div>
+  <!-- Project -->
+  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+  <script>
+    let socket = io();
+    let online = document.querySelector('#online');
+    let c = document.querySelector('.container');
+    let f = document.querySelector('#form');
+    let i = document.querySelector('#input');
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let message = i.value;
+
+      append(`You-:${message}`, 'left');
+      i.value = '';
+      socket.emit('send', message);
+
+    });
+    let append = function(message, pos) {
+      let mes = document.createElement('div');
+      mes.innerHTML = message;
+      mes.classList.add('message');
+      mes.classList.add(pos);
+      c.append(mes);
+    }
+    socket.on('recive', (data) => {
+      append(`Strange-:${data.message}`, 'right');
+    });
+  </script>
+</body>
+
+</html>
